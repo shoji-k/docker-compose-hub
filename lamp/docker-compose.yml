@@ -1,0 +1,20 @@
+version: '2'
+services:
+  web:
+    image: shojik/php:5-apache
+    ports:
+      - "20080:80"
+    volumes:
+      - ./www:/var/www/html
+    links:
+      - db:db
+  db:
+    image: shojik/mysql
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+      - ./datastore/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=sample
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
